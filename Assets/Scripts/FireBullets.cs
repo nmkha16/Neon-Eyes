@@ -18,7 +18,7 @@ public class FireBullets : MonoBehaviour
     void Start()
     {
         txt = GetComponentInChildren<MeshRenderer>();
-        lifeTime = Random.Range(15, 22);
+        lifeTime = Random.Range(5f, 13f);
 
         rb2d = GetComponent<Rigidbody2D>();
 
@@ -30,7 +30,7 @@ public class FireBullets : MonoBehaviour
         Destroy(gameObject, lifeTime);
         rb2d.AddForce(transform.up *bulletForce * Time.deltaTime);
 
-        chasingSpeed = Random.Range(0.3f, 2.7f); // each bullet has different traversal speed
+        chasingSpeed = Random.Range(0.3f, 1.5f); // each bullet has different traversal speed
 
         // get current rbg color
         nearDeadColor = targetSprite.color;
@@ -46,9 +46,11 @@ public class FireBullets : MonoBehaviour
         {
             // if lifetime  ran out, add point 
             ScoreSystem.instance.bulletExplodedPoint();
-        }
+        }       
+    }
 
-
+    private void FixedUpdate()
+    {
         // keep heading toward target which is player
         Vector2 direction = target.position;
         rb2d.transform.position = Vector2.MoveTowards(transform.position, direction, chasingSpeed * Time.deltaTime);

@@ -6,49 +6,41 @@ using TMPro;
 public class ScoreSystem : MonoBehaviour
 {
     public static ScoreSystem instance { get; private set; }
-    private int score;
-    private float timer; // update score every 1s;
+    private float score;
     public TMP_Text scoreHUD;
     void Start()
     {
         score = 0;
         instance = this;
-        timer = 1;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void FixedUpdate()
     {
-        timer -= Time.deltaTime;
-        if (timer < 0)
-        {
-            survivePoint();
-            timer = 1f;
-            // update score hud
-            scoreHUD.text = score.ToString();
-        }
-       
+        survivePoint();
+        // update score hud
+        scoreHUD.text = score.ToString("0.");
     }
 
     void survivePoint()
     {
         // every second survival increase score 22 scores
-        score += 22;
+        score += 0.1f;
     }
 
     public void bulletExplodedPoint()
     {
-        score += 3;
+        score += 30f;
     }
 
+    public void awardPointOnPickUp(float point)
+    {
+        score += point;
+    }
 
     public int getScore()
     {
-        return score;
+        return Mathf.RoundToInt(score);
     }
 
-    public void nearDodgePoint()
-    {
-        score += 150;
-    }
 }

@@ -70,7 +70,9 @@ public class PlayerMovement : MonoBehaviour
         //reset speed only if speed boost is used
         moveSpeed -= 100f;
         isBoost = true;
+        trail.time -= 0.06f;
         trail.enabled = false;
+        
     }
 
 

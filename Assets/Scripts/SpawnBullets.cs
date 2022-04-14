@@ -27,7 +27,7 @@ public class SpawnBullets : MonoBehaviour
         if (timer2 <= 0)
         {
             spawnBullet();
-            timer2 = Random.Range(1f, 7f);
+            timer2 = Random.Range(2f, 8f);
         }
 
     }

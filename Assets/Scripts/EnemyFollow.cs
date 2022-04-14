@@ -6,8 +6,10 @@ public class EnemyFollow : MonoBehaviour
 {
     private Transform target;
     private Rigidbody2D rb2d;
-    public float speed, rotationSpeed;
+    public float speed;
+    private float rotationSpeed;
     // Start is called before the first frame update
+    private Vector2 direction;
     void Start()
     {
         target= GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -19,19 +21,25 @@ public class EnemyFollow : MonoBehaviour
 
         // set random speed for each monster
         speed = Random.Range(0.2f, 2.2f);
+        rotationSpeed = Random.Range(1f, 7f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 direction = target.position;
-        Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
-        rb2d.transform.rotation = Quaternion.RotateTowards(rb2d.transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        direction = target.position;
+       
         if (Vector2.Distance(transform.position,target.position)> 2)
         {
            
             rb2d.transform.position = Vector2.MoveTowards(transform.position,direction,speed*Time.deltaTime);
 
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+        rb2d.transform.rotation = Quaternion.Slerp(rb2d.transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
     }
 }
